@@ -21,12 +21,15 @@ jobs:
       - name: Build App
         run: scripts/buildprod.sh
 
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           project_id: notely-443009 # Replace with your actual GCP project ID
-          export_default_credentials: true
 
       - name: Deploy to Cloud Run
         run: |
